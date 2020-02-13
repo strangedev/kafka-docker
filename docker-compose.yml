@@ -1,4 +1,4 @@
-version: '3.0'
+version: '3.5'
 services:
   zoo1:
     image: zookeeper
@@ -35,6 +35,9 @@ services:
       context: ./build/kafka
     restart: always
     hostname: broker0
+    networks:
+      - default
+      - kafka
     depends_on:
       - zoo1
       - zoo2
@@ -43,3 +46,7 @@ services:
       - 9092:9092
     volumes:
       - ./config/server.properties:/kafka/config/server.properties:ro
+
+networks:
+  kafka:
+    name: kafka
